@@ -19,15 +19,17 @@ module.exports = {
 
       const roundTemp =  Math.round(temperature.celcius);
       let message = "";
-      console.log(roundTemp);
+      console.log(response.weather[0].main);
 
-      let iconName = response.wheater.main;
+      let iconName = response.weather[0].main.toLowerCase();
+      let driveLevel = 0;
+
       switch(iconName){
         case "clear sky":
-        iconName = "weahter-cloudy";
+        iconName = "weahter-sunny";
         break;
         case "few clouds":
-        iconName = "weahter-cloudy";
+        iconName = "weahter-partlycloudy";
         break;
         case "scattered clouds":
         iconName = "weahter-cloudy";
@@ -51,31 +53,39 @@ module.exports = {
         iconName = "weahter-cloudy";
         break;
       }
+
+
      if(roundTemp > 3){
         if(response.weather[0].main.includes("rain")){
             message = "Attention ! La pluie risque de rendre la chaussée glissante";
+            driveLevel = 4;
         }else if(response.visibility < 5000){
             message = "Attention ! visibilité est réduite ! Gardez vos distances.";
+            driveLevel = 2;
         }
         else{
-            message = "Attention ! La pluie risque de rendre la chaussée glissante";
+            message = "La météo est optimale pour la route";
+            driveLevel = 1;
         }
       }
       else if(roundTemp < 3){
         if(response.visibility < 5000){
           message = "Attention ! Risque de plaque verglassante et la visibilité est réduite. Faites attention !";
+          driveLevel = 2;
         }
         else{
           message = "Attention ! Risque de plaque verglassante";
+          driveLevel = 2;
         }
       }else if(roundTemp < 0){
         if(response.visibility < 5000){
           message = "Faites attention !La visibilité est réduite. Les température annonce des chaussées très glissantes.";
+          driveLevel = 5;
         }
         else{
           message = "Attention ! Les chaussés sont très glissante.";
-          iconName = "weather-fog"
-        }
+          driveLevel = 4;
+       }
       }
 
       const meteoInformation = {
@@ -84,6 +94,7 @@ module.exports = {
           temp: roundTemp,
           visibility: response.visibility,
           wind: response.wind.speed,
+          level: driveLevel
       }
       return(meteoInformation);
     });
