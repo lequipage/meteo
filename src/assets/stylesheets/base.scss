@@ -1,0 +1,13 @@
+@import "config";
+@import "reset";
+
+/* stylelint-disable */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: red;
+  font-family: "Roboto Mono", monospace;
+}
