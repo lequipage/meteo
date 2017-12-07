@@ -17,17 +17,70 @@ module.exports = {
         celcius: response.main.temp - 275.15
       }
 
-      const roundTemp =  Math.round(temperature.celcius))
+      const roundTemp =  Math.round(temperature.celcius);
+      let message = "";
+      console.log(roundTemp);
 
-      if(temperature.celcius < 10){
-        console.log("en dessous de 10");
-      }else{
-        console.log("au dessus de 10");
+      let iconName = response.wheater.main;
+      switch(iconName){
+        case "clear sky":
+        iconName = "weahter-cloudy";
+        break;
+        case "few clouds":
+        iconName = "weahter-cloudy";
+        break;
+        case "scattered clouds":
+        iconName = "weahter-cloudy";
+        break;
+        case "broken clouds":
+        iconName = "weahter-cloudy";
+        break;
+        case "shower rain":
+        iconName = "weahter-pouring";
+        break;
+        case "rain":
+        iconName = "weahter-rainy";
+        break;
+        case "thunderstorm":
+        iconName = "weahter-lightning-rainy";
+        break;
+        case "snow":
+        iconName = "weahter-hail";
+        break;
+        case "mist":
+        iconName = "weahter-cloudy";
+        break;
+      }
+     if(roundTemp > 3){
+        if(response.weather[0].main.includes("rain")){
+            message = "Attention ! La pluie risque de rendre la chaussée glissante";
+        }else if(response.visibility < 5000){
+            message = "Attention ! visibilité est réduite ! Gardez vos distances.";
+        }
+        else{
+            message = "Attention ! La pluie risque de rendre la chaussée glissante";
+        }
+      }
+      else if(roundTemp < 3){
+        if(response.visibility < 5000){
+          message = "Attention ! Risque de plaque verglassante et la visibilité est réduite. Faites attention !";
+        }
+        else{
+          message = "Attention ! Risque de plaque verglassante";
+        }
+      }else if(roundTemp < 0){
+        if(response.visibility < 5000){
+          message = "Faites attention !La visibilité est réduite. Les température annonce des chaussées très glissantes.";
+        }
+        else{
+          message = "Attention ! Les chaussés sont très glissante.";
+          iconName = "weather-fog"
+        }
       }
 
       const meteoInformation = {
-          message: "lama",
-          icon: iconUrl,
+          description: message,
+          icon: iconName,
           temp: roundTemp,
           visibility: response.visibility,
           wind: response.wind.speed,
