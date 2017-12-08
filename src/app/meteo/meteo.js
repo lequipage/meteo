@@ -25,38 +25,38 @@ module.exports = {
 
       switch(iconName){
         case "clear sky":
-        iconName = "weahter-sunny";
+        iconName = "WeahterSunny";
         break;
         case "few clouds":
-        iconName = "weahter-partlycloudy";
+        iconName = "WeahterPartlycloudy";
         break;
         case "scattered clouds":
-        iconName = "weahter-cloudy";
+        iconName = "WeahterCloudy";
         break;
         case "broken clouds":
-        iconName = "weahter-cloudy";
+        iconName = "WeahterCloudy";
         break;
         case "shower rain":
-        iconName = "weahter-pouring";
+        iconName = "WeahterPouring";
         break;
         case "rain":
-        iconName = "weahter-rainy";
+        iconName = "WeahterRainy";
         driveLevel+=2;
         break;
         case "rainy":
-        iconName = "weahter-rainy";
+        iconName = "WeahterRainy";
         driveLevel+=2;
         break;
         case "thunderstorm":
-        iconName = "weahter-lightning-rainy";
+        iconName = "WeahterLightningRainy";
         driveLevel+= 2;
         break;
         case "snow":
-        iconName = "weahter-hail";
+        iconName = "WeahterHail";
         driveLevel+= 2;
         break;
         case "mist":
-        iconName = "weahter-cloudy";
+        iconName = "WeahterCloudy";
         driveLevel+= 2;
         break;
       }
