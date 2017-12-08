@@ -19,8 +19,6 @@ module.exports = {
 
       const roundTemp =  Math.round(temperature.celcius);
       let message = "";
-      console.log(response.weather[0].main);
-
       let iconName = response.weather[0].main.toLowerCase();
       let driveLevel = 0;
 
@@ -42,50 +40,50 @@ module.exports = {
         break;
         case "rain":
         iconName = "weahter-rainy";
+        driveLevel+=2;
+        break;
+        case "rainy":
+        iconName = "weahter-rainy";
+        driveLevel+=2;
         break;
         case "thunderstorm":
         iconName = "weahter-lightning-rainy";
+        driveLevel+= 2;
         break;
         case "snow":
         iconName = "weahter-hail";
+        driveLevel+= 2;
         break;
         case "mist":
         iconName = "weahter-cloudy";
+        driveLevel+= 2;
         break;
       }
 
-
-     if(roundTemp > 3){
-        if(response.weather[0].main.includes("rain")){
-            message = "Attention ! La pluie risque de rendre la chaussée glissante";
-            driveLevel = 4;
-        }else if(response.visibility < 5000){
-            message = "Attention ! visibilité est réduite ! Gardez vos distances.";
-            driveLevel = 2;
-        }
-        else{
-            message = "La météo est optimale pour la route";
-            driveLevel = 1;
-        }
+      if(response.visibility > 200 && response.visibility < 500){
+        driveLevel++;
+      }else if(response.visibility < 200){
+        driveLevel+=2;
       }
-      else if(roundTemp < 3){
-        if(response.visibility < 5000){
-          message = "Attention ! Risque de plaque verglassante et la visibilité est réduite. Faites attention !";
-          driveLevel = 2;
-        }
-        else{
-          message = "Attention ! Risque de plaque verglassante";
-          driveLevel = 2;
-        }
-      }else if(roundTemp < 0){
-        if(response.visibility < 5000){
-          message = "Faites attention !La visibilité est réduite. Les température annonce des chaussées très glissantes.";
-          driveLevel = 5;
-        }
-        else{
-          message = "Attention ! Les chaussés sont très glissante.";
-          driveLevel = 4;
-       }
+
+      switch (driveLevel) {
+        case 1:
+          message = "La météo est optimale. Faites tout de même attention";
+          break;
+        case 2:
+          message = "La pluie peut rendre la chaussée glissante.";
+        break;
+        case 3:
+          message = "Gardez vos distance, la conduite est difficile";
+          break;
+        case 4:
+          message = "Evitez de prendre le volant, la conduite est dangereuse";
+        break;
+        case 5:
+          message = "La météo est dangereuse. Prenez le volant en cas d'extrême urgence";
+        break;
+        default:
+
       }
 
       const meteoInformation = {
@@ -93,8 +91,8 @@ module.exports = {
           icon: iconName,
           temp: roundTemp,
           visibility: response.visibility,
-          wind: response.wind.speed,
-          level: driveLevel
+          level: driveLevel,
+          wind: response.wind.speed
       }
       return(meteoInformation);
     });
