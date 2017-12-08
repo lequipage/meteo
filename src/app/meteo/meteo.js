@@ -21,6 +21,7 @@ module.exports = {
       let message = "";
       let iconName = response.weather[0].main.toLowerCase();
       let driveLevel = 0;
+      let color = "";
 
       switch(iconName){
         case "clear sky":
@@ -65,22 +66,30 @@ module.exports = {
       }else if(response.visibility < 200){
         driveLevel+=2;
       }
+      if(response.wind.speed > 10.8){
+        driveLevel++;
+      };
 
       switch (driveLevel) {
         case 1:
           message = "La météo est optimale. Faites tout de même attention";
+          color: "#62b340";
           break;
         case 2:
           message = "La pluie peut rendre la chaussée glissante.";
+          color: "#62b340";
         break;
         case 3:
           message = "Gardez vos distance, la conduite est difficile";
+          color: "#FF8800";
           break;
         case 4:
           message = "Evitez de prendre le volant, la conduite est dangereuse";
+          color: "#e52421";
         break;
         case 5:
           message = "La météo est dangereuse. Prenez le volant en cas d'extrême urgence";
+          color: "#e52421";
         break;
         default:
 
